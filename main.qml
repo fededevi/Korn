@@ -23,9 +23,19 @@ Window {
     property int lineFinished: 1;
 
     Rectangle {
+        id:buttonBar
+        anchors.top: parent.top
+        anchors.left: parent.left
+        anchors.right: parent.right
+        height: 40
         Row {
+            spacing: 10
+            anchors.fill: parent
+            anchors.verticalCenter: parent.verticalCenter
             Slider {
+                anchors.verticalCenter: parent.verticalCenter
                 id: sizeSlider
+                width: 150
                 from: 10
                 value: size
                 to: 100
@@ -35,7 +45,9 @@ Window {
                 }
             }
             Slider {
+                anchors.verticalCenter: parent.verticalCenter
                 id: baseXSlider
+                width: 150
                 stepSize: 1
                 from: 1
                 value: baseX
@@ -46,7 +58,9 @@ Window {
                 }
             }
             Slider {
+                anchors.verticalCenter: parent.verticalCenter
                 id: baseYSlider
+                width: 150
                 stepSize: 1
                 from: 1
                 value: baseY
@@ -57,10 +71,12 @@ Window {
                 }
             }
             Button {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 100
+                height: 35
                 text: "Save to Image"
                 onClicked: {
                     fileDialog.visible = true;
-                    //kgrid.save("C:/Users/fdevigili/Desktop/a.png");
                 }
                 FileDialog {
                     id: fileDialog
@@ -72,19 +88,42 @@ Window {
 
                     onAccepted: {
                         console.log("You chose: " + fileDialog.fileUrl)
-                        kgrid.save(fileDialog.fileUrl.replace("file:///",""));
+                        var str = "" + fileDialog.fileUrl;
+                        str = str.substring(8)
+                        kgrid.save(str);
                     }
-                    onRejected: {
-                        console.log("Canceled")
-                    }
+                    onRejected: {}
+                }
+            }
+            Button {
+                anchors.verticalCenter: parent.verticalCenter
+                width: 50
+                height: 35
+                text: "Clear"
+                onClicked: {
+                    lines = []
+                    kgrid.requestPaint()
+                }
+            }
+            CheckBox {
+                height: 40
+                text: "Hor."
+                checked: true
+                onCheckedChanged: {
+                    kgrid.hRepeat = checked
+                    kgrid.requestPaint()
+                }
+            }
+            CheckBox {
+                height: 40
+                text: "Ver."
+                checked: true
+                onCheckedChanged: {
+                    kgrid.vRepeat = checked
+                    kgrid.requestPaint()
                 }
             }
         }
-        id:buttonBar
-        anchors.top: parent.top
-        anchors.left: parent.left
-        anchors.right: parent.right
-        height: 40
     }
     Item {
 
@@ -109,25 +148,24 @@ Window {
             Item {
                 id: area
                 property int edge: size
-                x: index%tileX * size + size/2 - edge/2 +1
-                y: Math.floor(index/tileX) * size + size/2 - edge/2 +1
-                //color: "#000000"
+                property int xCount: index%tileX
+                property int yCount: Math.floor(index/tileX)
+                x: xCount* size + size/2 - edge/2 +1
+                y: yCount* size + size/2 - edge/2 +1
                 height: edge
                 width: edge
                 MouseArea {
                     anchors.fill: parent
                     onClicked: {
-                        var x = area.x+edge/2-0.5;
-                        var y = area.y+edge/2-0.5;
                         if (lineFinished === 0) {
                             lineFinished = 1
-                            var point = {"x":x,"y":y}
+                            var point = {"x":xCount,"y":yCount}
                             var line = {"s":lastPoint,"f":point};
                             lines.push(line);
                             console.log(line.s.x)
                             kgrid.requestPaint()
                         } else {
-                            lastPoint = {"x":x,"y":y};
+                            lastPoint = {"x":xCount,"y":yCount};
                             lineFinished = 0
                         }
 

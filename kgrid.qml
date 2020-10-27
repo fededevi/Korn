@@ -9,6 +9,8 @@ Canvas {
     property color color: "#662222AA"
     property variant lines: []
     property color lineColor: "#EE000000"
+    property bool hRepeat: true
+    property color vRepeat: true
 
     onPaint: {
         var ctx = getContext("2d")
@@ -19,8 +21,14 @@ Canvas {
         var blockSizeX = wgrid * baseX;
         var blockSizeY = wgrid * baseY;
 
-        for(var i=0; i < 10; i++){
-            for(var j=0; j < 10; j++){
+        var blockCountX = Math.floor(root.width / blockSizeX)
+        var blockCountY = Math.floor(root.height / blockSizeY)
+
+        blockCountX = hRepeat ? blockCountX : 1
+        blockCountY = vRepeat ? blockCountY : 1
+
+        for(var i=0; i < blockCountX; i++){
+            for(var j=0; j < blockCountY; j++){
                 drawLines(blockSizeX*i, blockSizeY*j);
             }
         }
@@ -67,8 +75,8 @@ Canvas {
         for(var i=0; i < root.lines.length; i++){
             var s = lines[i].s;
             var f = lines[i].f;
-            ctx.moveTo(s.x+xOffset, s.y+yOffset);
-            ctx.lineTo(f.x+xOffset, f.y+yOffset);
+            ctx.moveTo(s.x*wgrid+wBorder+xOffset, s.y*wgrid+wBorder+yOffset);
+            ctx.lineTo(f.x*wgrid+wBorder+xOffset, f.y*wgrid+wBorder+yOffset);
         }
         ctx.stroke()
     }
