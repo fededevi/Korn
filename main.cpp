@@ -14,5 +14,8 @@ int main(int argc, char *argv[])
 
 	engine.load(url);
 
+	app.setOrganizationName("DevilSoft");
+	app.setOrganizationDomain("devilsoft");
+
 	return app.exec();
 }

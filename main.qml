@@ -1,6 +1,7 @@
 import QtQuick 2.15
 import QtQuick.Window 2.15
 import QtQuick.Controls 2.15
+import QtQuick.Dialogs 1.0
 
 Window {
     id: win
@@ -33,6 +34,51 @@ Window {
                     kgrid.requestPaint()
                 }
             }
+            Slider {
+                id: baseXSlider
+                stepSize: 1
+                from: 1
+                value: baseX
+                to: 10
+                onMoved: {
+                    baseX = baseXSlider.value
+                    kgrid.requestPaint()
+                }
+            }
+            Slider {
+                id: baseYSlider
+                stepSize: 1
+                from: 1
+                value: baseY
+                to: 10
+                onMoved: {
+                    baseY = baseYSlider.value
+                    kgrid.requestPaint()
+                }
+            }
+            Button {
+                text: "Save to Image"
+                onClicked: {
+                    fileDialog.visible = true;
+                    //kgrid.save("C:/Users/fdevigili/Desktop/a.png");
+                }
+                FileDialog {
+                    id: fileDialog
+                    visible: false
+                    selectExisting : false
+                    defaultSuffix :".png"
+                    title: "Please choose how to save the image"
+                    folder: shortcuts.home
+
+                    onAccepted: {
+                        console.log("You chose: " + fileDialog.fileUrl)
+                        kgrid.save(fileDialog.fileUrl.replace("file:///",""));
+                    }
+                    onRejected: {
+                        console.log("Canceled")
+                    }
+                }
+            }
         }
         id:buttonBar
         anchors.top: parent.top
@@ -52,8 +98,8 @@ Window {
             anchors.fill: parent
             wgrid: size
             wBorder: size / 2 + 0.5
-            baseX: 5
-            baseY: 5
+            baseX: win.baseX
+            baseY: win.baseY
             lines: win.lines
         }
 
