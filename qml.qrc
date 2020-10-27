@@ -1,0 +1,7 @@
+<RCC>
+    <qresource prefix="/">
+        <file>main.qml</file>
+        <file>Kgrid.qml</file>
+        <file>Klines.qml</file>
+    </qresource>
+</RCC>
