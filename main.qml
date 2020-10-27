@@ -25,10 +25,13 @@ Window {
         Row {
             Slider {
                 id: sizeSlider
-                from: 40
-                value: 10
+                from: 10
+                value: size
                 to: 100
-                onMoved: size = sizeSlider.value
+                onMoved: {
+                    size = sizeSlider.value
+                    kgrid.requestPaint()
+                }
             }
         }
         id:buttonBar
@@ -45,8 +48,8 @@ Window {
         anchors.bottom: parent.bottom
 
         Kgrid {
-            anchors.fill: parent
             id: kgrid
+            anchors.fill: parent
             wgrid: size
             wBorder: size / 2 + 0.5
             baseX: 5
@@ -59,7 +62,7 @@ Window {
             model: tileX * tileY
             Item {
                 id: area
-                property int edge: 21
+                property int edge: size
                 x: index%tileX * size + size/2 - edge/2 +1
                 y: Math.floor(index/tileX) * size + size/2 - edge/2 +1
                 //color: "#000000"
