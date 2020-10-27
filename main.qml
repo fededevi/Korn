@@ -6,7 +6,7 @@ import QtQuick.Dialogs 1.0
 Window {
     id: win
     visible: true
-    title: "s"
+    title: "Korn |\\/|"
     width:  1260
     height: 891 + buttonBar.height
 

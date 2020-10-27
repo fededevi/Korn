@@ -8,7 +8,7 @@ Canvas {
     property int baseY: 4
     property color color: "#662222AA"
     property variant lines: []
-    property color lineColor: "#EE000000"
+    property color lineColor: "#99000000"
     property bool hRepeat: true
     property bool vRepeat: true
 
@@ -27,9 +27,11 @@ Canvas {
         blockCountX = hRepeat ? blockCountX : 1
         blockCountY = vRepeat ? blockCountY : 1
 
+        drawLines(0, 0);
         for(var i=0; i < blockCountX; i++){
             for(var j=0; j < blockCountY; j++){
-                drawLines(blockSizeX*i, blockSizeY*j);
+                if (i===0 && j===0) continue;
+                drawLines(blockSizeX*i, blockSizeY*j, true);
             }
         }
 
@@ -67,17 +69,20 @@ Canvas {
         ctx.stroke()
     }
 
-    function drawLines(xOffset,yOffset) {
+    function drawLines(xOffset,yOffset, dashed) {
         var ctx = getContext("2d")
-        ctx.lineWidth = 3
+        ctx.lineWidth = 1.5
         ctx.strokeStyle = lineColor
         ctx.beginPath()
+        if (dashed)
+            ctx.setLineDash([0,1,2]);
         for(var i=0; i < root.lines.length; i++){
             var s = lines[i].s;
             var f = lines[i].f;
             ctx.moveTo(s.x*wgrid+wBorder+xOffset, s.y*wgrid+wBorder+yOffset);
             ctx.lineTo(f.x*wgrid+wBorder+xOffset, f.y*wgrid+wBorder+yOffset);
         }
+        ctx.setLineDash([]);
         ctx.stroke()
     }
 }
