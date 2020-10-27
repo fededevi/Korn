@@ -10,7 +10,7 @@ Canvas {
     property variant lines: []
     property color lineColor: "#EE000000"
     property bool hRepeat: true
-    property color vRepeat: true
+    property bool vRepeat: true
 
     onPaint: {
         var ctx = getContext("2d")

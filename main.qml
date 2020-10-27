@@ -7,8 +7,8 @@ Window {
     id: win
     visible: true
     title: "s"
-    width: 800
-    height: 1000
+    width:  1260
+    height: 891 + buttonBar.height
 
     property int baseX: 4
     property int baseY: 4
@@ -36,6 +36,7 @@ Window {
                 anchors.verticalCenter: parent.verticalCenter
                 id: sizeSlider
                 width: 150
+                stepSize: 2
                 from: 10
                 value: size
                 to: 100
@@ -126,7 +127,6 @@ Window {
         }
     }
     Item {
-
         anchors.top: buttonBar.bottom
         anchors.left: parent.left
         anchors.right: parent.right
