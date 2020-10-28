@@ -6,8 +6,8 @@ import QtQuick.Dialogs 1.0
 Window {
     id: win
     visible: true
-    title: "Korn |\\/|"
-    width:  1260
+    title: "Korn - Federico Devigili - https://github.com/fededevi - federicodevigili@lgmail.com"
+    width:  1040
     height: 891
 
     property int baseX: 4
@@ -22,11 +22,16 @@ Window {
     property variant lastPoint;
     property int lineFinished: 1;
 
-    ToolBar {
+    Item {
         id: buttonBar
+        width: 200
         anchors.top: parent.top
         anchors.bottom: parent.bottom
         anchors.left: parent.left
+        ToolBar {
+            anchors.topMargin: 20
+            anchors.fill: parent
+        }
     }
 
     Item {
@@ -73,6 +78,7 @@ Window {
                         }
 
                     }
+
                 }
             }
         }

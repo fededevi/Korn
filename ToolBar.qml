@@ -5,14 +5,57 @@ import QtQuick.Dialogs 1.0
 
 Rectangle {
     id:buttonBar
-
-
-    width: 200
     Column {
         spacing: 10
         anchors.fill: parent
         anchors.horizontalCenter: parent.horizontalCenter
 
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 150
+            height: 35
+            text: "Save to Image"
+            onClicked: {
+                fileDialog.visible = true;
+            }
+            FileDialog {
+                id: fileDialog
+                visible: false
+                selectExisting : false
+                defaultSuffix :".png"
+                title: "Please choose how to save the image"
+                folder: shortcuts.home
+
+                onAccepted: {
+                    console.log("You chose: " + fileDialog.fileUrl)
+                    var str = "" + fileDialog.fileUrl;
+                    str = str.substring(8)
+                    kgrid.save(str);
+                }
+                onRejected: {}
+            }
+        }
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 150
+            height: 35
+            text: "Clear"
+            onClicked: {
+                lines = []
+                kgrid.requestPaint()
+            }
+        }
+        Button {
+            anchors.horizontalCenter: parent.horizontalCenter
+            width: 150
+            height: 35
+            text: "Undo"
+            onClicked: {
+                lines.pop();
+                kgrid.requestPaint()
+            }
+        }
+        Item {width: 150;height: 20}
         LabelSlider {
             id: sizeSlider
             anchors.horizontalCenter: parent.horizontalCenter
@@ -68,52 +111,6 @@ Rectangle {
             }
         }
 
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 150
-            height: 35
-            text: "Save to Image"
-            onClicked: {
-                fileDialog.visible = true;
-            }
-            FileDialog {
-                id: fileDialog
-                visible: false
-                selectExisting : false
-                defaultSuffix :".png"
-                title: "Please choose how to save the image"
-                folder: shortcuts.home
-
-                onAccepted: {
-                    console.log("You chose: " + fileDialog.fileUrl)
-                    var str = "" + fileDialog.fileUrl;
-                    str = str.substring(8)
-                    kgrid.save(str);
-                }
-                onRejected: {}
-            }
-        }
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 150
-            height: 35
-            text: "Clear"
-            onClicked: {
-                lines = []
-                kgrid.requestPaint()
-            }
-        }
-        Button {
-            anchors.horizontalCenter: parent.horizontalCenter
-            width: 150
-            height: 35
-            text: "Undo"
-            onClicked: {
-                lines.pop();
-                kgrid.requestPaint()
-            }
-        }
-
         CheckBox {
             anchors.horizontalCenter: parent.horizontalCenter
             height: 40
@@ -130,7 +127,7 @@ Rectangle {
             anchors.horizontalCenter: parent.horizontalCenter
             height: 40
             width: 150
-            text: "Show Repeat Box"
+            text: "Show Grid"
             checked: kgrid.showGrid
             onCheckedChanged: {
                 kgrid.showGrid = checked

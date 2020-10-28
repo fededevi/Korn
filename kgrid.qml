@@ -2,7 +2,7 @@ import QtQuick 2.15
 
 Canvas {
     id: root
-    property int wgrid: 40
+    property int wgrid: 30
     property real wBorder: 0
     property real lineWidth: 2
     property int baseX: 4
