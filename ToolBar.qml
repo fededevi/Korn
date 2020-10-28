@@ -135,6 +135,17 @@ Rectangle {
             }
         }
 
+        CheckBox {
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 40
+            width: 150
+            text: "Snap To Grid"
+            checked: win.snapToGrid
+            onCheckedChanged: {
+                win.snapToGrid = checked
+            }
+        }
+
         Rectangle {
             width: 150
             height: 150

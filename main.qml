@@ -20,7 +20,7 @@ Window {
     property int tileY: height / size
 
     property variant lastPoint;
-    property int lineFinished: 1;
+    property bool snapToGrid: true;
 
     Item {
         id: buttonBar
@@ -51,36 +51,38 @@ Window {
         }
 
 
-        Repeater {
-            model: tileX * tileY
-            Item {
-                id: area
-                property int edge: size
-                property int xCount: index%tileX
-                property int yCount: Math.floor(index/tileX)
-                x: xCount* size + size/2 - edge/2 +1
-                y: yCount* size + size/2 - edge/2 +1
-                height: edge
-                width: edge
-                MouseArea {
-                    anchors.fill: parent
-                    onClicked: {
-                        if (lineFinished === 0) {
-                            lineFinished = 1
-                            var point = {"x":xCount,"y":yCount}
-                            var line = {"s":lastPoint,"f":point};
-                            lines.push(line);
-                            console.log(line.s.x)
-                            kgrid.requestPaint()
-                        } else {
-                            lastPoint = {"x":xCount,"y":yCount};
-                            lineFinished = 0
-                        }
+        MouseArea {
 
-                    }
-
+            function getMouseIndex(mouse) {
+                var xIndex = (mouse.x - size*0.5) / size
+                var yIndex = (mouse.y - size*0.5) / size
+                if (snapToGrid) {
+                    xIndex = Math.round(xIndex)
+                    yIndex = Math.round(yIndex)
                 }
+                return{"x":xIndex,"y":yIndex}
             }
+
+            anchors.fill: parent
+            property bool draggingLine: false
+
+            onPressed: {
+                draggingLine = true;
+
+                lastPoint = getMouseIndex(mouse);
+                console.log(lastPoint.x,lastPoint.y)
+            }
+            onReleased: {
+                if (!draggingLine) return;
+                draggingLine = false;
+                var line = {"s":lastPoint,"f":getMouseIndex(mouse)};
+                lines.push(line);
+                console.log(line.s.x,line.s.y,line.f.x,line.f.y)
+                kgrid.requestPaint()
+            }
+
+
+
         }
 
 
