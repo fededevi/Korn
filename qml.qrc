@@ -3,5 +3,7 @@
         <file>main.qml</file>
         <file>Kgrid.qml</file>
         <file>Klines.qml</file>
+        <file>ToolBar.qml</file>
+        <file>LabelSlider.qml</file>
     </qresource>
 </RCC>
