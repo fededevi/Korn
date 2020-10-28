@@ -12,11 +12,17 @@ Canvas {
     property color lineColor: "#99000000"
     property int hRepeat: 100
     property int vRepeat: 100
+    property bool repeatBox: true
+    property bool showGrid: true
 
     onPaint: {
         var ctx = getContext("2d")
         ctx.reset();
+
+        if (showGrid)
         drawBaseGrid();
+
+        if (repeatBox)
         drawBaseCOntour(baseX, baseY);
 
         var blockSizeX = wgrid * baseX;
@@ -29,6 +35,7 @@ Canvas {
 
         for(var i=0; i < blockCountX; i++){
             for(var j=0; j < blockCountY; j++){
+                if (i === 0 && j === 0) continue;
                 if (i >= hRepeat) continue;
                 if (j >= vRepeat) continue;
                 drawLines(blockSizeX*i, blockSizeY*j, true);

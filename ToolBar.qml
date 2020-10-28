@@ -114,6 +114,30 @@ Rectangle {
             }
         }
 
+        CheckBox {
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 40
+            width: 150
+            text: "Show Repeat Box"
+            checked: kgrid.repeatBox
+            onCheckedChanged: {
+                kgrid.repeatBox = checked
+                kgrid.requestPaint()
+            }
+        }
+
+        CheckBox {
+            anchors.horizontalCenter: parent.horizontalCenter
+            height: 40
+            width: 150
+            text: "Show Repeat Box"
+            checked: kgrid.showGrid
+            onCheckedChanged: {
+                kgrid.showGrid = checked
+                kgrid.requestPaint()
+            }
+        }
+
         Rectangle {
             width: 150
             height: 150
