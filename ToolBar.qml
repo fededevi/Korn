@@ -113,26 +113,96 @@ Rectangle {
                 kgrid.requestPaint()
             }
         }
-        CheckBox {
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 40
+
+        Rectangle {
             width: 150
-            text: "Horizontal Repeat"
-            checked: true
-            onCheckedChanged: {
-                kgrid.hRepeat = checked
-                kgrid.requestPaint()
+            height: 150
+            border.width: 1
+            anchors.horizontalCenter: parent.horizontalCenter
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    x : 10
+                    text: qsTr("Horizontal Repeat:")
+                }
+                RadioButton {
+                    width: 150
+                    text: qsTr("No H. Repeat")
+                    onCheckedChanged: {
+                        if (checked) {
+                            kgrid.hRepeat = 1;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
+                RadioButton {
+                    width: 150
+                    text: qsTr("One H. Repeat")
+                    onCheckedChanged: {
+                        if (checked) {
+                            kgrid.hRepeat = 2;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
+                RadioButton {
+                    width: 150
+                    checked: true
+                    text: qsTr("Full H. Repeat")
+                    onCheckedChanged:  {
+                        if (checked) {
+                            kgrid.hRepeat = 100;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
             }
         }
-        CheckBox {
-            anchors.horizontalCenter: parent.horizontalCenter
-            height: 40
+
+        Rectangle {
             width: 150
-            text: "Vertical Repeat"
-            checked: true
-            onCheckedChanged: {
-                kgrid.vRepeat = checked
-                kgrid.requestPaint()
+            height: 150
+            border.width: 1
+            anchors.horizontalCenter: parent.horizontalCenter
+            Column {
+                anchors.horizontalCenter: parent.horizontalCenter
+                anchors.verticalCenter: parent.verticalCenter
+                Text {
+                    x : 10
+                    text: qsTr("Vertical Repeat:")
+                }
+                RadioButton {
+                    width: 150
+                    text: qsTr("No V. Repeat")
+                    onCheckedChanged: {
+                        if (checked) {
+                            kgrid.vRepeat = 1;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
+                RadioButton {
+                    width: 150
+                    text: qsTr("One V. Repeat")
+                    onCheckedChanged: {
+                        if (checked) {
+                            kgrid.vRepeat = 2;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
+                RadioButton {
+                    width: 150
+                    checked: true
+                    text: qsTr("Full V. Repeat")
+                    onCheckedChanged:  {
+                        if (checked) {
+                            kgrid.vRepeat = 100;
+                            kgrid.requestPaint()
+                        }
+                    }
+                }
             }
         }
     }
